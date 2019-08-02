@@ -8,7 +8,7 @@ namespace SampleBill.Service.Mapping
     {
         public CommonMappingProfile()
         {
-            
+            CreateMap<JVoucher, JVoucherVM>().ReverseMap();
         }
     }
 }

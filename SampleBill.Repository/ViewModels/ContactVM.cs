@@ -1,11 +1,14 @@
-﻿using System;
+﻿using SampleBill.Entity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SampleBill.Entity
+namespace SampleBill.Repository.ViewModels
 {
-    public class Contact : BaseEntity<Guid>
+    public class ContactVM:BaseVM<Guid>
     {
-        public Contact()
+        public ContactVM()
         {
             Bill = new HashSet<Bill>();
             Invoice = new HashSet<Invoice>();

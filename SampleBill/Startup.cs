@@ -11,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SampleBill.Entity;
+using SampleBill.Repository;
+using SampleBill.Repository.Interfaces;
+using SampleBill.Service;
+using SampleBill.Service.Interface;
 using SampleBill.Service.Mapping;
 
 namespace SampleBill
@@ -53,7 +57,8 @@ namespace SampleBill
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
             });
-
+            services.AddTransient<IJVoucherService, JVoucherService>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -73,6 +78,12 @@ namespace SampleBill
             app.UseCookiePolicy();
             app.UseSession();
 
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                if (!serviceScope.ServiceProvider.GetService<AccountingDbContext>().AllMigrationsApplied())
+                    serviceScope.ServiceProvider.GetService<AccountingDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<AccountingDbContext>().EnsureSeeded();
+            }
 
             app.UseMvc(routes =>
             {

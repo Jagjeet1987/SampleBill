@@ -33,7 +33,7 @@ namespace SampleBill.Common
             Member = 2
         }
 
-        public enum VoucherType
+        public enum TransactionType
         {
             Invoice=1,
             Bill=2

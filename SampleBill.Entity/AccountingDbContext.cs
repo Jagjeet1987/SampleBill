@@ -23,15 +23,35 @@ namespace SampleBill.Entity
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Contact>().ToTable("Contact");
-            modelBuilder.Entity<Invoice>().ToTable("Invoice");
-            //modelBuilder.Entity<Tabs>().ToTable("Tabs");
-            //modelBuilder.Entity<RoleTab>().ToTable("RoleTab");
+            modelBuilder.Entity<Contact>(entity =>
+            {
+                entity.ToTable("Contact");
+
+            });
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                entity.ToTable("Invoice");
+
+            });
+            modelBuilder.Entity<Bill>(entity =>
+            {
+                entity.ToTable("Bill");               
+
+            });
+            modelBuilder.Entity<JVoucher>(entity =>
+            {
+                entity.ToTable("JVoucher");
+
+            });
+            modelBuilder.Entity<Transaction>().ToTable("Transaction");
 
         }
 
         public DbSet<Contact> Contact { get; set; }
         public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<Bill> Bill { get; set; }
+        public DbSet<JVoucher> JVoucher { get; set; }
+        public DbSet<Transaction> Transaction { get; set; }
         //public DbSet<Tabs> Tabs { get; set; }
         //public DbSet<RoleTab> RoleTab { get; set; }
 
